@@ -79,11 +79,33 @@ class DoublyLinkedList:
             else:
                 this_node = this_node.get_next()
         return None
-    
+    def print_backward(self):
+        """Finds the tail of the list and traverses backward using get_prev()."""
+        if not self.root:
+            print("Empty List")
+            return
+
+        # 1. Walk forward to find the very last node (the tail)
+        this_node = self.root
+        while this_node.get_next() is not None:
+            this_node = this_node.get_next()
+
+        # 2. Now walk backward using get_prev()
+        elements = []
+        while this_node is not None:
+            elements.append(str(this_node.get_data()))
+            this_node = this_node.get_prev()  # <-- This tests the double aspect!
+
+        print("Backward trace: " + " -> ".join(elements))
+
 myList = DoublyLinkedList()
 myList.add(5)
 myList.add(8)
 myList.add(12)
+# The list forward is: 12 -> 8 -> 5
+# If backward links work, it should print: 5 -> 8 -> 12
+myList.print_backward()
+
 print("size=" + str(myList.get_size()))  # size=3
 myList.remove(8)
 print("size=" + str(myList.get_size()))  # size=2
